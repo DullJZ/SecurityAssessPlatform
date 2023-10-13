@@ -88,7 +88,38 @@ def ShowAllContainers(client) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success', 'containers': containers}
+    else:
+        # deal with containers list to a form like this:
+        # [{'name': 'xxx', 'id': 'abc', 'status': 'running'}, {'name': 'yyy', 'id': 'def', 'status': 'exited'}]
+        result = [{'name': container.name, 'id': container.id, 'status': container.status} for container in containers]
+        return {'status': 'success', 'containers': result}
+
+def ShowRunningContainers(client) -> dict:
+    try:
+        containers = client.containers.list()
+    except docker.errors.APIError as e:
+        print(e)
+        return {'status': 'failed', 'message': e}
+    else:
+        return {'status': 'success', 'containers': containers}
+
+def ShowStoppedContainers(client) -> dict:
+    try:
+        containers = client.containers.list(filters={'status': 'exited'})
+    except docker.errors.APIError as e:
+        print(e)
+        return {'status': 'failed', 'message': e}
+    else:
+        return {'status': 'success', 'containers': containers}
+
+def ShowContainerInfo(client, container_name_or_id) -> dict:
+    try:
+        container = client.containers.get(container_name_or_id)
+    except docker.errors.APIError as e:
+        print(e)
+        return {'status': 'failed', 'message': e}
+    else:
+        return {'status': 'success', 'container': {'name': container.name, 'id': container.id, 'short_id': container.short_id, 'status': container.status, 'image': container.image.tags[0], 'ports': container.ports}}
 
 def RunContainerByComposeFile(client, compose_file_dir) -> list:
     """
@@ -156,18 +187,18 @@ def RunContainerByComposeFile(client, compose_file_dir) -> list:
     # 'for' end
     return result
 
-def RunCommand(command: str) -> dict:
+def RunCommand(command: str, timeout=10) -> dict:
     """
     Run command in shell
     MAY BE DANGEROUS!
     """
     try:
-        result = subprocess.Popen(command, shell=True)
-        result.wait(10)
-
+        result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result.wait(timeout)
     except Exception as e:
-        return {'status': 'failed', 'message': e}
-    return {'status': 'success', 'result': result}
+        return {'status': 'failed', 'message': e, 'result': result.communicate()[0].decode('utf-8'), 'error': result.communicate()[1].decode('utf-8')}
+    else:
+        return {'status': 'success', 'result': result.communicate()[0].decode('utf-8'), 'error': result.communicate()[1].decode('utf-8')}
 
 def GenerateUnusedPort() -> int:
     while True:
@@ -184,8 +215,13 @@ def GenerateUnusedPort() -> int:
 
 # use for test
 client = GetDockerClient()
-print(GetDockerVersion(client))
-print(GetDockerInfo(client))
-print(RunContainerByComposeFile(client, './test/alist-docker-compose.yml'))
+#print(GetDockerVersion(client))
+#print(GetDockerInfo(client))
+#print(RunContainerByComposeFile(client, './test/alist-docker-compose.yml'))
 #ForceDeleteContainer(client, '1697105828')
-#print(ShowAllContainers(client))
+print(ShowAllContainers(client))
+#print(RunCommand('docker volume create portainer_data && docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest'))
+#StopContainer(client, 'portainer')
+#DeleteContainer(client, 'portainer')
+print(RunCommand('docker ps -a'))
+print(ShowContainerInfo(client, 'portainer'))
