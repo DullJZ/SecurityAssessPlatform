@@ -5,6 +5,7 @@ import subprocess
 import sys
 import socket
 import random
+import os
 
 def GetDockerClient(remote = '') -> docker.DockerClient:
     if remote:
@@ -160,18 +161,21 @@ def RunContainerByComposeFile(client, compose_file_dir) -> list:
         else:
             environment = None
         # volumes
+        CWD = os.getcwd()
         if 'volumes' in single_container.keys():
             volumes = single_container['volumes']
+            for i in range(len(volumes)):
+                volumes[i] = volumes[i].replace('.', CWD)
         else:
             volumes = None
         # ports
-        host_ports = [] # use for log
+        mapping_ports = [] # use for log
         if 'ports' in single_container.keys():
             ports = dict()
             for mapping_rule in single_container['ports']:
                 host_port, container_port = mapping_rule.split(':')
                 host_port = GenerateUnusedPort()
-                host_ports.append(host_port)
+                mapping_ports.append(f'{host_port}:{container_port}')
                 ports[f'{container_port}/tcp'] = int(host_port)
         else:
             ports = None
@@ -183,7 +187,7 @@ def RunContainerByComposeFile(client, compose_file_dir) -> list:
             print(e)
             result.append({'status': 'failed', 'message': e})
         else:
-            result.append({'status': 'success', 'ContainerName': container_name, 'Ports': host_ports})
+            result.append({'status': 'success', 'ContainerName': container_name, 'Ports': mapping_ports})
     # 'for' end
     return result
 
@@ -217,11 +221,12 @@ def GenerateUnusedPort() -> int:
 client = GetDockerClient()
 #print(GetDockerVersion(client))
 #print(GetDockerInfo(client))
-#print(RunContainerByComposeFile(client, './test/alist-docker-compose.yml'))
-#ForceDeleteContainer(client, '1697105828')
-print(ShowAllContainers(client))
+#ForceDeleteContainer(client, 'caddy')
+#ForceDeleteContainer(client, 'vaultwarden')
+#print(RunContainerByComposeFile(client, '/workspace/SecurityAssessPlatform/docker-manager/test/bitwarden-docker-compose.yml'))
+#print(ShowAllContainers(client))
 #print(RunCommand('docker volume create portainer_data && docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest'))
 #StopContainer(client, 'portainer')
 #DeleteContainer(client, 'portainer')
-print(RunCommand('docker ps -a'))
-print(ShowContainerInfo(client, 'portainer'))
+#print(RunCommand('docker ps -a'))
+#print(ShowContainerInfo(client, 'portainer'))
