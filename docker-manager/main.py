@@ -25,7 +25,8 @@ def PullImage(client, image_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def DeleteImage(client, image_name) -> dict:
     try:
@@ -33,7 +34,8 @@ def DeleteImage(client, image_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def StartContainer(client, container_name) -> dict:
     try:
@@ -41,7 +43,8 @@ def StartContainer(client, container_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def StopContainer(client, container_name) -> dict:
     try:
@@ -49,7 +52,8 @@ def StopContainer(client, container_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def RestartContainer(client, container_name) -> dict:
     try:
@@ -57,7 +61,8 @@ def RestartContainer(client, container_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def DeleteContainer(client, container_name) -> dict:
     try:
@@ -65,7 +70,8 @@ def DeleteContainer(client, container_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def ForceDeleteContainer(client, container_name) -> dict:
     try:
@@ -73,7 +79,8 @@ def ForceDeleteContainer(client, container_name) -> dict:
     except docker.errors.APIError as e:
         print(e)
         return {'status': 'failed', 'message': e}
-    return {'status': 'success'}
+    else:
+        return {'status': 'success'}
 
 def ShowAllContainers(client) -> dict:
     try:
@@ -144,8 +151,8 @@ def RunContainerByComposeFile(client, compose_file_dir) -> list:
         except Exception as e:
             print(e)
             result.append({'status': 'failed', 'message': e})
-        print('Run container {} success'.format(container_name))
-        result.append({'status': 'success', 'ContainerName': container_name, 'Ports': host_ports})
+        else:
+            result.append({'status': 'success', 'ContainerName': container_name, 'Ports': host_ports})
     # 'for' end
     return result
 
@@ -179,6 +186,6 @@ def GenerateUnusedPort() -> int:
 client = GetDockerClient()
 print(GetDockerVersion(client))
 print(GetDockerInfo(client))
-print(RunContainerByComposeFile(client, './test/docker-compose.yml'))
+print(RunContainerByComposeFile(client, './test/alist-docker-compose.yml'))
 #ForceDeleteContainer(client, '1697105828')
 #print(ShowAllContainers(client))
