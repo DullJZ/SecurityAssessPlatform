@@ -25,7 +25,7 @@ def PullImage(client, image_name) -> dict:
         client.images.pull(image_name)
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -34,7 +34,7 @@ def DeleteImage(client, image_name) -> dict:
         client.images.remove(image_name)
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -43,7 +43,7 @@ def StartContainer(client, container_name) -> dict:
         client.containers.get(container_name).start()
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -52,7 +52,7 @@ def StopContainer(client, container_name) -> dict:
         client.containers.get(container_name).stop()
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -61,7 +61,7 @@ def RestartContainer(client, container_name) -> dict:
         client.containers.get(container_name).restart()
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -70,7 +70,7 @@ def DeleteContainer(client, container_name) -> dict:
         client.containers.get(container_name).remove()
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -79,7 +79,7 @@ def ForceDeleteContainer(client, container_name) -> dict:
         client.containers.get(container_name).remove(force=True)
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success'}
 
@@ -88,7 +88,7 @@ def ShowAllContainers(client) -> dict:
         containers = client.containers.list(all=True)
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         # deal with containers list to a form like this:
         # [{'name': 'xxx', 'id': 'abc', 'status': 'running'}, {'name': 'yyy', 'id': 'def', 'status': 'exited'}]
@@ -100,9 +100,10 @@ def ShowRunningContainers(client) -> dict:
         containers = client.containers.list()
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
-        return {'status': 'success', 'containers': containers}
+        result = [{'name': container.name, 'id': container.id, 'status': container.status} for container in containers]
+        return {'status': 'success', 'containers': result}
 
 def ShowStoppedContainers(client) -> dict:
     try:
@@ -111,7 +112,8 @@ def ShowStoppedContainers(client) -> dict:
         print(e)
         return {'status': 'failed', 'message': e}
     else:
-        return {'status': 'success', 'containers': containers}
+        result = [{'name': container.name, 'id': container.id, 'status': container.status} for container in containers]
+        return {'status': 'success', 'containers': result}
 
 def ShowContainerInfo(client, container_name_or_id) -> dict:
     try:
@@ -122,7 +124,7 @@ def ShowContainerInfo(client, container_name_or_id) -> dict:
     else:
         return {'status': 'success', 'container': {'name': container.name, 'id': container.id, 'short_id': container.short_id, 'status': container.status, 'image': container.image.tags[0], 'ports': container.ports}}
 
-def RunContainerByComposeFile(client, compose_file_dir) -> list:
+def RunContainerByComposeFile(client, compose_file_dir) -> dict:
     """
     Only support docker-compose.yml version 3
     Only support 'image', 'container_name', 'restart', 'environment', 'volumes', 'ports' keys
@@ -189,7 +191,7 @@ def RunContainerByComposeFile(client, compose_file_dir) -> list:
         else:
             result.append({'status': 'success', 'ContainerName': container_name, 'Ports': mapping_ports})
     # 'for' end
-    return result
+    return {'info': result}
 
 def RunCommand(command: str, timeout=10) -> dict:
     """
