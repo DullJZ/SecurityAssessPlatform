@@ -1,62 +1,103 @@
-这是一组用于操作Docker的函数，下面是每个函数的说明：
+API文档：
 
-- `GetDockerClient(remote = '') -> docker.DockerClient`: 这个函数用于获取Docker客户端。如果提供了`remote`参数，它将连接到远程Docker服务器，否则它将连接到本地环境。
+1. `/api`
+   -  方法 : `POST`, `GET`
+   -  描述 : 返回一个状态为'success'的JSON对象。
+   -  返回示例 ：`{"status":"success"}`
 
-- `GetDockerVersion(client) -> dict`: 这个函数返回Docker服务器的版本信息。
+2. `/api/delete_image`
+   -  方法 : `POST`
+   -  描述 : 删除指定的Docker镜像。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `image_name`: 要删除的Docker镜像的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `GetDockerInfo(client) -> dict`: 这个函数返回Docker服务器的详细信息。
+3. `/api/delete_container`
+   -  方法 : `POST`
+   -  描述 : 删除指定的Docker容器。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `container_name`: 要删除的Docker容器的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `PullImage(client, image_name) -> dict`: 这个函数用于从Docker Hub拉取指定的镜像。
+4. `/api/pull_image`
+   -  方法 : `POST`
+   -  描述 : 从Docker Hub拉取指定的镜像。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `image_name`: 要拉取的Docker镜像的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `DeleteImage(client, image_name) -> dict`: 这个函数用于删除指定的镜像。
+5. `/api/restart_container`
+   -  方法 : `POST`
+   -  描述 : 重启指定的Docker容器。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `container_name`: 要重启的Docker容器的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `StartContainer(client, container_name) -> dict`: 这个函数用于启动指定的容器。
+6. `/api/start_container`
+   -  方法 : `POST`
+   -  描述 : 启动指定的Docker容器。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `container_name`: 要启动的Docker容器的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `StopContainer(client, container_name) -> dict`: 这个函数用于停止指定的容器。
+7. `/api/stop_container`
+   -  方法 : `POST`
+   -  描述 : 停止指定的Docker容器。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+     - `container_name`: 要停止的Docker容器的名称。
+   -  返回示例 ：`{"status":"success"}`
 
-- `RestartContainer(client, container_name) -> dict`: 这个函数用于重启指定的容器。
+8. `/api/get_docker_info`
+   -  方法 : `POST`
+   -  描述 : 获取Docker服务器信息。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+   -  返回示例 ：`{"Architecture":"x86_64","BridgeNfIp6tables":true,"BridgeNfIptables":true,"CPUSet":true,"CPUShares":true,"CgroupDriver":"cgroupfs","CgroupVersion":"2","ContainerdCommit":{"Expected":"61f9fd88f79f081d64d6fa3bb1a0dc71ec870523","ID":"61f9fd88f79f081d64d6fa3bb1a0dc71ec870523"},"Containers":3,"ContainersPaused":0,"ContainersRunning":3,"ContainersStopped":0,"CpuCfsPeriod":true,"CpuCfsQuota":true,"Debug":false,"DefaultRuntime":"gitpod","DockerRootDir":"/workspace/.docker-root","Driver":"overlay2","DriverStatus":[["Backing Filesystem","xfs"],["Supports d_type","true"],["Using metacopy","false"],["Native Overlay Diff","false"],["userxattr","true"]],"ExperimentalBuild":false,"GenericResources":null,"HttpProxy":"","HttpsProxy":"","ID":"b2deeeba-b6cc-48e3-b47c-8d09d079c175","IPv4Forwarding":true,"Images":5,"IndexServerAddress":"https://index.docker.io/v1/","InitBinary":"docker-init","InitCommit":{"Expected":"de40ad0","ID":"de40ad0"},"Isolation":"","KernelVersion":"6.1.54-060154-generic","Labels":[],"LiveRestoreEnabled":false,"LoggingDriver":"json-file","MemTotal":67421282304,"MemoryLimit":true,"NCPU":16,"NEventsListener":0,"NFd":50,"NGoroutines":66,"Name":"dulljz-securityassesspl-snj15fqb6ua","NoProxy":"","OSType":"linux","OSVersion":"22.04","OomKillDisable":false,"OperatingSystem":"Ubuntu 22.04.3 LTS (containerized)","PidsLimit":true,"Plugins":{"Authorization":null,"Log":["awslogs","fluentd","gcplogs","gelf","journald","json-file","local","logentries","splunk","syslog"],"Network":["bridge","host","ipvlan","macvlan","null","overlay"],"Volume":["local"]},"RegistryConfig":{"AllowNondistributableArtifactsCIDRs":null,"AllowNondistributableArtifactsHostnames":null,"IndexConfigs":{"docker.io":{"Mirrors":[],"Name":"docker.io","Official":true,"Secure":true}},"InsecureRegistryCIDRs":["127.0.0.0/8"],"Mirrors":null},"RuncCommit":{"Expected":"v1.1.9-0-gccaecfcb","ID":"v1.1.9-0-gccaecfcb"},"Runtimes":{"gitpod":{"path":"/usr/bin/runc-facade"},"io.containerd.runc.v2":{"path":"runc"},"runc":{"path":"runc"}},"SecurityOptions":["name=seccomp,profile=builtin","name=cgroupns"],"ServerVersion":"24.0.6","SwapLimit":true,"Swarm":{"ControlAvailable":false,"Error":"","LocalNodeState":"inactive","NodeAddr":"","NodeID":"","RemoteManagers":null},"SystemTime":"2023-10-15T08:52:52.76065897Z","Warnings":null}
+`
 
-- `DeleteContainer(client, container_name) -> dict`: 这个函数用于删除指定的容器。
+9. `/api/get_docker_version`
+   -  方法 : `POST`
+   -  描述 : 获取Docker版本信息。
+   -  参数 :
+     - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+   -  返回示例 ：`{"ApiVersion":"1.43","Arch":"amd64","BuildTime":"2023-09-04T12:31:44.000000000+00:00","Components":[{"Details":{"ApiVersion":"1.43","Arch":"amd64","BuildTime":"2023-09-04T12:31:44.000000000+00:00","Experimental":"false","GitCommit":"1a79695","GoVersion":"go1.20.7","KernelVersion":"6.1.54-060154-generic","MinAPIVersion":"1.12","Os":"linux"},"Name":"Engine","Version":"24.0.6"},{"Details":{"GitCommit":"61f9fd88f79f081d64d6fa3bb1a0dc71ec870523"},"Name":"containerd","Version":"1.6.24"},{"Details":{"GitCommit":"v1.1.9-0-gccaecfcb"},"Name":"gitpod","Version":"1.1.9"},{"Details":{"GitCommit":"de40ad0"},"Name":"docker-init","Version":"0.19.0"}],"GitCommit":"1a79695","GoVersion":"go1.20.7","KernelVersion":"6.1.54-060154-generic","MinAPIVersion":"1.12","Os":"linux","Platform":{"Name":"Docker Engine - Community"},"Version":"24.0.6"}
+`
 
-- `ForceDeleteContainer(client, container_name) -> dict`: 这个函数用于强制删除指定的容器，即使它正在运行。
+10. `/api/show_running_containers`
+    -  方法 : `POST`
+    -  描述 : 显示正在运行中的所有Docker容器。
+    -  参数 :
+      - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+    -  返回示例 ：`{"containers":[{"id":"c126a9625767e4e024072e9ba4ed506c287025fcb054fdef46ee0766fe1bc0b6","name":"169735854918","status":"running"},{"id":"3ca83f1374db3f2e685cfae0944b19db172600d376113c5a96372bda058f6b9b","name":"alist1","status":"running"},{"id":"ab1c51393188eca88734e7610ad08b5f072655ed0f222dad93ef487f04be8967","name":"portainer","status":"running"}],"status":"success"}
+`
 
-- `ShowAllContainers(client) -> dict`: 这个函数返回所有容器的列表，包括正在运行和已停止的容器。
+11. `/api/show_all_containers`
+    -  方法 : `POST`
+    -  描述 : 显示所有Docker容器，包括未运行中的。
+    -  参数 :
+      - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+    -  返回示例 ：`{"containers":[{"id":"c126a9625767e4e024072e9ba4ed506c287025fcb054fdef46ee0766fe1bc0b6","name":"169735854918","status":"running"},{"id":"3ca83f1374db3f2e685cfae0944b19db172600d376113c5a96372bda058f6b9b","name":"alist1","status":"running"},{"id":"ab1c51393188eca88734e7610ad08b5f072655ed0f222dad93ef487f04be8967","name":"portainer","status":"running"}],"status":"success"}
+`
 
-- `ShowRunningContainers(client) -> dict`: 这个函数返回正在运行的容器列表。
+12. `/api/show_container_info`
+    -  方法 : `POST`
+    -  描述 : 显示指定Docker容器信息。
+    -  参数 :
+      - `remote`: Docker服务器的地址 若为远程实验模式则填写空字符串。
+      - `container_name`: 要查询信息的Docker容器名称。
+    -  返回示例 ：`{"container":{"id":"ab1c51393188eca88734e7610ad08b5f072655ed0f222dad93ef487f04be8967","image":"portainer/portainer-ce:latest","name":"portainer","ports":{"8000/tcp":[{"HostIp":"0.0.0.0","HostPort":"8000"},{"HostIp":"::","HostPort":"8000"}],"9000/tcp":[{"HostIp":"0.0.0.0","HostPort":"9000"},{"HostIp":"::","HostPort":"9000"}],"9443/tcp":null},"short_id":"ab1c51393188","status":"running"},"status":"success"}
+`
 
-- `ShowStoppedContainers(client) -> dict`: 这个函数返回已停止的容器列表。
-
-- `ShowContainerInfo(client, container_name_or_id) -> dict`: 这个函数返回指定容器的详细信息，包括名称、ID、状态、使用的镜像和开放的端口等。
-
-- `RunContainerByComposeFile(client, compose_file_dir) -> list`: 这个函数根据给定的docker-compose文件来运行容器。它只支持docker-compose.yml版本3，并且只支持'image', 'container_name', 'restart', 'environment', 'volumes', 'ports'这些键。
-
-- `RunCommand(command: str, timeout=10) -> dict`: 这个函数在shell中运行指定的命令。注意，这可能会有风险。
-
-- `GenerateUnusedPort() -> int`: 这个函数生成一个未被使用的端口号。它会不断地生成一个随机的端口号，直到找到一个未被使用的端口号为止。
-
-
-以下是所有函数的详细信息：
-
-| 函数名 | 必要参数 | 可选参数 | 调用示例 | 示例返回值 |
-| --- | --- | --- | --- | --- |
-| GetDockerClient | 无 | remote='' | GetDockerClient('tcp://192.168.1.100:2376') | docker.DockerClient 对象 |
-| GetDockerVersion | client | 无 | GetDockerVersion(client) | {'status': 'success', 'version': '20.10.7'} |
-| GetDockerInfo | client | 无 | GetDockerInfo(client) | {'status': 'success', 'info': {...}} |
-| PullImage | client, image_name | 无 | PullImage(client, 'ubuntu:latest') | {'status': 'success'} |
-| DeleteImage | client, image_name | 无 | DeleteImage(client, 'ubuntu:latest') | {'status': 'success'} |
-| StartContainer | client, container_name | 无 | StartContainer(client, 'my_container') | {'status': 'success'} |
-| StopContainer | client, container_name | 无 | StopContainer(client, 'my_container') | {'status': 'success'} |
-| RestartContainer | client, container_name | 无 | RestartContainer(client, 'my_container') | {'status': 'success'} |
-| DeleteContainer | client, container_name | 无 | DeleteContainer(client, 'my_container') | {'status': 'success'} |
-| ForceDeleteContainer | client, container_name | 无 | ForceDeleteContainer(client, 'my_container') | {'status': 'success'} |
-| ShowAllContainers | client | 无 | ShowAllContainers(client)  | {'status': 'success', 'containers': [{'name': 'xxx', 'id': 'abc', 'status': 'running'}, ...]} |
-| ShowRunningContainers | client | 无 | ShowRunningContainers(client) | {'status': 'success', 'containers': [{'name': 'xxx', 'id': 'abc', 'status': 'running'}, ...]}|
-| ShowStoppedContainers | client | 无 | ShowStoppedContainers(client) | {'status': 'success', 'containers': [{'name': 'xxx', 'id': 'abc', 'status': 'exited'}, ...]}|
-| ShowContainerInfo | client, container_name_or_id | 无 | ShowContainerInfo(client, "my_container") | {'status': 'success', ...}|
-| RunContainerByComposeFile | client, compose_file_dir | 无 | RunContainerByComposeFile(client, "/path/to/docker-compose.yml") | [{'status': 'success', ...}, ...]|
-| RunCommand | command: str | timeout=10 | RunCommand("ls -l", timeout=5) | {'status': 'success', ...}|
-| GenerateUnusedPort | 无 | 无 | GenerateUnusedPort() | 12345|
-
-注意：以上示例返回值仅供参考，实际返回值可能会有所不同。另外，这些函数在执行过程中可能会抛出异常，需要在调用时进行适当的错误处理。如果函数执行成功，通常会返回一个包含'status'和'message'的字典，其中'status'为'success'，'message'包含了执行结果。如果函数执行失败，'status'将为'failed'，并且'message'将包含错误信息。对于一些函数，例如ShowAllContainers、ShowRunningContainers和ShowStoppedContainers，它们还会返回一个包含所有容器信息的列表。每个容器的信息是一个字典，包含'name'、'id'和'status'等键。对于ShowContainerInfo函数，它会返回一个包含指定容器详细信息的字典。
-
-以上内容由AI辅助撰写，可能存在错误，以源代码为准
+13. 13.：`/api/run_container_by_compose_file` 
+    - 方法：`POST` 
+    - 描述：通过compose文件运行容器。 
+    - 参数： 
+        - remote：docker服务器地址。 
+        - compose_file：compose文件路径。 
+    -  返回示例 ：`{"info":[{"ContainerName":"alist1","Ports":["53596:5244"],"status":"success"}]}`

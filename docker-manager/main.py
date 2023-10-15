@@ -110,7 +110,7 @@ def ShowStoppedContainers(client) -> dict:
         containers = client.containers.list(filters={'status': 'exited'})
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         result = [{'name': container.name, 'id': container.id, 'status': container.status} for container in containers]
         return {'status': 'success', 'containers': result}
@@ -120,7 +120,7 @@ def ShowContainerInfo(client, container_name_or_id) -> dict:
         container = client.containers.get(container_name_or_id)
     except docker.errors.APIError as e:
         print(e)
-        return {'status': 'failed', 'message': e}
+        return {'status': 'failed', 'message': str(e)}
     else:
         return {'status': 'success', 'container': {'name': container.name, 'id': container.id, 'short_id': container.short_id, 'status': container.status, 'image': container.image.tags[0], 'ports': container.ports}}
 
@@ -187,7 +187,7 @@ def RunContainerByComposeFile(client, compose_file_dir) -> dict:
                                   restart_policy=restart_policy, environment=environment, volumes=volumes, ports=ports)
         except Exception as e:
             print(e)
-            result.append({'status': 'failed', 'message': e})
+            result.append({'status': 'failed', 'message': str(e)})
         else:
             result.append({'status': 'success', 'ContainerName': container_name, 'Ports': mapping_ports})
     # 'for' end
@@ -202,7 +202,7 @@ def RunCommand(command: str, timeout=10) -> dict:
         result = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         result.wait(timeout)
     except Exception as e:
-        return {'status': 'failed', 'message': e, 'result': result.communicate()[0].decode('utf-8'), 'error': result.communicate()[1].decode('utf-8')}
+        return {'status': 'failed', 'message': str(e), 'result': result.communicate()[0].decode('utf-8'), 'error': result.communicate()[1].decode('utf-8')}
     else:
         return {'status': 'success', 'result': result.communicate()[0].decode('utf-8'), 'error': result.communicate()[1].decode('utf-8')}
 
@@ -223,7 +223,7 @@ def GenerateUnusedPort() -> int:
 client = GetDockerClient()
 #print(GetDockerVersion(client))
 #print(GetDockerInfo(client))
-#ForceDeleteContainer(client, 'caddy')
+#ForceDeleteContainer(client, 'alist1')
 #ForceDeleteContainer(client, 'vaultwarden')
 #print(RunContainerByComposeFile(client, '/workspace/SecurityAssessPlatform/docker-manager/test/bitwarden-docker-compose.yml'))
 #print(ShowAllContainers(client))
