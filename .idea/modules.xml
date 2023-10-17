@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SecurityAssessPlatform.iml" filepath="$PROJECT_DIR$/.idea/SecurityAssessPlatform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/ServerDemo/ServerDemo.iml" filepath="$PROJECT_DIR$/server/ServerDemo/ServerDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/supervisor/SupervisorDemo/SupervisorDemo.iml" filepath="$PROJECT_DIR$/supervisor/SupervisorDemo/SupervisorDemo.iml" />
     </modules>
   </component>

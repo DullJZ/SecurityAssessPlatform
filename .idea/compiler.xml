@@ -8,15 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SupervisorDemo" />
+        <module name="ServerDemo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demo" target="17" />
+      <module name="ServerDemo" target="17" />
       <module name="SupervisorDemo" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ServerDemo" options="-parameters" />
       <module name="SupervisorDemo" options="-parameters" />
       <module name="demo" options="-parameters" />
     </option>
