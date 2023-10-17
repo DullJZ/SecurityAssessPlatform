@@ -1,2 +1,8 @@
 server:
   port: 2023
+spring:
+  security:
+    user:
+      name: admin
+      password: 123456
+      roles: supervisor, experimenter
