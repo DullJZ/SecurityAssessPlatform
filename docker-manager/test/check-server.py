@@ -8,4 +8,4 @@ def api():
     return jsonify({'status': 'success'})
 
 if __name__ == '__main__':
-    app.run(port=15001)
+    app.run(host='0.0.0.0', port=15001)

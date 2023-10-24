@@ -2,8 +2,10 @@ import requests
 import re
 import subprocess
 import time
+import os
 
-CHECK_SERVER = 'http://172.17.0.1:15001'
+#从环境变量中获取校验服务器地址
+CHECK_SERVER = os.environ.get('CHECK_SERVER')
 while True:
     
     # 使用Popen创建进程，并与进程进行复杂的交互
@@ -21,7 +23,6 @@ while True:
     """
     pattern = r'\((.*?)\)' # 匹配括号内的内容
     matches = re.findall(pattern, m)
-    print(matches)
     for t in matches:
         if t != '::1' and t != '127.0.0.1':
             requests.post(f'{CHECK_SERVER}')
