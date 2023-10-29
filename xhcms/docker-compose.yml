@@ -1,9 +1,7 @@
 version: '3'
 services:
   php:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: dulljz/xhcms-php
     ports:
       - "10080:80"
     volumes:
