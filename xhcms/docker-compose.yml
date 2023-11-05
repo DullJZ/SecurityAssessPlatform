@@ -1,9 +1,9 @@
 version: '3'
 services:
   php:
-    image: dulljz/xhcms-php
+    image: dulljz/xhcms-php:latest
     ports:
-      - "10080:80"
+      - "1080:80"
     volumes:
       - ./src:/var/www/html
 
