@@ -12,9 +12,9 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(c -> c.requestMatchers("/login").permitAll()
-                .requestMatchers("/sup").hasRole("supervisor")
-                .requestMatchers("/exp").hasRole("experimenter")
-                .anyRequest().authenticated());
+                .requestMatchers("/sup","/#/sup").hasRole("supervisor")
+                .requestMatchers("/exp","/#/exp").hasRole("experimenter")
+                .anyRequest().permitAll());
         http.csrf(c -> c.disable());
         http.formLogin(c -> c.defaultSuccessUrl("/"));
         return http.build();

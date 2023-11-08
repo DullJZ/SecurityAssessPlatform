@@ -46,7 +46,11 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$refs.loginForm.submit()
+          this.$axios.post('/login', this.loginForm).then(res => {
+            console.log(res.data)
+          }).catch(err => {
+            console.log(err)
+          })
         }
       })
     },

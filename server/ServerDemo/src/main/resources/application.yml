@@ -5,4 +5,9 @@ spring:
     user:
       name: admin
       password: 123456
-      roles: supervisor, experimenter
+      roles: experimenter
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.159.154.40:30006/pyshark_demo
+    username: pyshark_demo
+    password: XArFYd3M2fjW54xL

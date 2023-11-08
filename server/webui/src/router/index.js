@@ -20,13 +20,62 @@ const routes = [
   // },
   {
     path: '/exp',
-    name: 'experimenter',
-    component: () => import('../views/ExperimenterView.vue')
+    component: () => import('../views/ExperimenterView.vue'),
+    children: [
+      {
+        path: '',
+        name: 'experimenter-home',
+        component: () => import('../views/UserView.vue')
+      },
+      {
+        path: 'my-exp',
+        name: 'my-experiment',
+        component: () => import('../views/MyExpView.vue')
+      }
+    ]
   },
   {
     path: '/sup',
-    name: 'supervisor',
-    component: () => import('../views/SupervisorView.vue')
+    component: () => import('../views/SupervisorView.vue'),
+    children: [
+      {
+        path: '',
+        name: 'supervisor-home',
+        component: () => import('../views/UserView.vue')
+      },
+      {
+        path: 'class',
+        name: 'class-management',
+        component: () => import('../views/ClassManagementView.vue')
+      },
+      {
+        path: 'exp',
+        name: 'experiment',
+        component: () => import('../views/ExpView.vue'),
+        // children: [
+        //   {
+        //     path: 'publish',
+        //     name: 'publish-exp',
+        //     component: () => import('../views/ExpPublishView.vue')
+        //   },
+        //   {
+        //     path: 'watch',
+        //     name: 'exp-watch',
+        //     component: () => import('../views/ExpWatchView.vue')
+        //   },
+        //   {
+        //     path: 'history',
+        //     name: 'exp-history',
+        //     component: () => import('../views/ExpHistoryView.vue')
+        //   },
+        // ]
+      },
+      {
+        path: 'images',
+        name: 'image-management',
+        component: () => import('../views/ImageView.vue')
+      },
+      ],
   }
 ]
 

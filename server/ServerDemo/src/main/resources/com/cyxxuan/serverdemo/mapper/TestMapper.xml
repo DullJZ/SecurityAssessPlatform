@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyxxuan.serverdemo.mapper.TestMapper">
+<!--    <resultMap id="UserResultMap" type="com.example.models.User">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="name" column="name"/>-->
+<!--        <result property="email" column="email"/>-->
+<!--    </resultMap>-->
+    <resultMap id="httpPacketMap" type="com.cyxxuan.serverdemo.pojo.HttpPacket">
+        <id property="id" column="id"/>
+        <result property="timestamp" column="timestamp"/>
+        <result property="topLayer" column="top_layer"/>
+        <result property="srcIp" column="src_ip"/>
+        <result property="dstIp" column="dst_ip"/>
+        <result property="httpHeader" column="http_header"/>
+    </resultMap>
+
+    <select id="selectPacketById" resultMap="httpPacketMap">
+        SELECT id, timestamp, src_ip, dst_ip, top_layer, http_header FROM xhcms where id = #{id}
+    </select>
+
+    <select id="selectPacketsByIndexes" resultMap="httpPacketMap">
+        SELECT id, timestamp, src_ip, dst_ip, top_layer, http_header FROM xhcms order by id desc limit #{start}, #{length}
+    </select>
+
+<!--    <select id="findById" resultMap="UserResultMap" parameterType="int">-->
+<!--        SELECT * FROM users WHERE id = #{id}-->
+<!--    </select>-->
+
+<!--    <insert id="insert" parameterType="com.example.models.User">-->
+<!--        INSERT INTO users (name, email) VALUES (#{name}, #{email})-->
+<!--    </insert>-->
+
+<!--    <update id="update" parameterType="com.example.models.User">-->
+<!--        UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id}-->
+<!--    </update>-->
+
+<!--    <delete id="delete" parameterType="int">-->
+<!--        DELETE FROM users WHERE id = #{id}-->
+<!--    </delete>-->
+</mapper>
