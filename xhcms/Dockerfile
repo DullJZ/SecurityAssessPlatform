@@ -3,4 +3,5 @@ RUN docker-php-ext-install mysql mysqli pdo pdo_mysql fileinfo mbstring
 RUN echo 'deb http://mirrors.tencent.com/debian-archive/debian stretch main' > /etc/apt/sources.list
 RUN echo 'deb http://mirrors.tencent.com/debian-archive/debian-security stretch/updates main' >> /etc/apt/sources.list
 ADD entrypoint.sh /entrypoint.sh
+ADD install.php /install.php
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
