@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - "13306:3306"
+
+  adminer:
+    image: adminer
+    ports:
+      - "28080:8080"
