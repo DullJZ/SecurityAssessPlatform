@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkwebui"]=self["webpackChunkwebui"]||[]).push([[80],{1080:function(e,n,u){u.r(n),u.d(n,{default:function(){return l}});var r=function(){var e=this;e._self._c;return e._m(0)},t=[function(){var e=this,n=e._self._c;return n("div",[n("h1",[e._v("UserView")])])}],i={name:"UserView"},s=i,c=u(1001),f=(0,c.Z)(s,r,t,!1,null,"6a1076cf",null),l=f.exports}}]);
+//# sourceMappingURL=80.14dd33a6.js.map
