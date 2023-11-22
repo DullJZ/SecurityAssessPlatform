@@ -4,7 +4,7 @@ config = {
     "host": "139.159.154.40",
     "port": 30006,
     "user": "pyshark_demo",
-    "password": "XArFYd3M2fjW54xL",
+    "password": "xhwZWNdD32rZnmPs",
     "database": "pyshark_demo"
 }
 conn = mysql.connector.connect(**config)

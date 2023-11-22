@@ -76,6 +76,16 @@ const routes = [
         component: () => import('../views/ImageView.vue')
       },
       ],
+  },
+  {
+    path: '/packet',
+    name: 'packetView',
+    component: () => import("../views/PacketView.vue")
+  },
+  {
+    path: '/monitor',
+    name: 'monitorView',
+    component: () => import("../views/MonitorView.vue")
   }
 ]
 
