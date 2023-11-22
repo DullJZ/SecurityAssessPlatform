@@ -4,12 +4,11 @@ config = {
     "host": "localhost",
     "port": 13306,
     "user": "root",
-    "password": "root",
-    "database": "pysharkDB"
+    "password": "root"
 }
 conn = mysql.connector.connect(**config)
 
-db_name = config["database"]
+db_name = "pysharkDB"
 
 print("数据库连接成功")
 
@@ -19,6 +18,10 @@ cursor.execute(f"SHOW DATABASES LIKE '{db_name}'")
 if cursor.fetchone() is None:
     cursor.execute(f"CREATE DATABASE {db_name}")
     print(f"数据库 {db_name} 创建成功")
+
+# 进入数据库
+cursor.execute(f"USE {db_name}")
+print(f"成功进入数据库 {db_name}")
 
 # 检测数据表是否存在
 table_name = "xhcms"
