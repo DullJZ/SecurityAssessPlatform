@@ -4,7 +4,7 @@ config = {
     "host": "localhost",
     "port": 13306,
     "user": "root",
-    "password": "root",
+    "password": "root"
     }
 conn = mysql.connector.connect(**config)
 
