@@ -16,9 +16,4 @@ class ServerDemoApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    void sqlTest(){
-        HttpPacket[] httpPacket = mapper.selectPacketsByIndexes(100,200);
-        System.out.println();
-    }
 }

@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkwebui"]=self["webpackChunkwebui"]||[]).push([[107],{2107:function(e,n,u){u.r(n),u.d(n,{default:function(){return c}});var t=function(){var e=this;e._self._c;return e._m(0)},r=[function(){var e=this,n=e._self._c;return n("div",[n("h1",[e._v("班级管理")])])}],s={name:"ClassManagementView"},i=s,a=u(1001),l=(0,a.Z)(i,t,r,!1,null,"3948b822",null),c=l.exports}}]);
-//# sourceMappingURL=107.120369bf.js.map

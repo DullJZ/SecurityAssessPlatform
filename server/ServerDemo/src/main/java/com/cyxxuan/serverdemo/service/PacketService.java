@@ -6,6 +6,8 @@ import com.cyxxuan.serverdemo.pojo.HttpPacket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PacketService {
     @Autowired
@@ -16,8 +18,8 @@ public class PacketService {
         return packet;
     }
 
-    public HttpPacket[] getLatest(Integer nums){
-        HttpPacket[] packets = mapper.selectPacketsByIndexes(0,nums);
+    public List<HttpPacket> getLatest(Integer nums){
+        List<HttpPacket> packets = mapper.selectPacketsByIndexes(0,nums);
         for (HttpPacket packet : packets) {
             packet.setHttpHeader(JSONObject.parseObject((String) packet.getHttpHeader()));
         }
