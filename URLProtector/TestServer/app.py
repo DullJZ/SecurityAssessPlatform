@@ -11,10 +11,12 @@ def detect_sql_injection(url):
         return False
     url = params[1]
     url = url.split('&')
-    if len(url) < 2:
+    if len(url) == 0:
         return False
     for i in url:
-        t = i.split('=')[1]
+        t = i.split('=')
+        if len(t) < 2:
+            continue
         for keyword in sql_keywords:
             if keyword in t.upper():
                 print('SQL Injection detected!')
